@@ -1,8 +1,18 @@
 package io.github.erichcl.domain.entity;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table
 public class Cliente {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
     private Integer id;
+
+    @Column(name = "nome", length = 100)
     private String nome;
 
     public Cliente() {
