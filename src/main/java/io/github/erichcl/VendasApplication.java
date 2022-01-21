@@ -18,25 +18,27 @@ public class VendasApplication {
     @Bean
     public CommandLineRunner init(@Autowired Clientes clientes) {
         return args -> {
-            clientes.salvar(new Cliente("teste1"));
-            clientes.salvar(new Cliente("teste2"));
-            clientes.salvar(new Cliente("teste3"));
-            clientes.salvar(new Cliente("teste4"));
+            clientes.save(new Cliente("teste1"));
+            clientes.save(new Cliente("teste2"));
+            clientes.save(new Cliente("teste3"));
+            clientes.save(new Cliente("teste4"));
 
-            List<Cliente> todosClientes = clientes.obterTodos();
+            List<Cliente> todosClientes = clientes.findAll();
             todosClientes.forEach(System.out::println);
 
             todosClientes.forEach(c -> {
                 c.setNome(c.getNome() + " atualizado");
-                clientes.atualizar(c);
+                clientes.save(c);
             });
 
-            clientes.buscarPorNome("2").forEach(System.out::println);
-
-            clientes.deletar(2);
+            clientes.findByNomeLike("2").forEach(System.out::println);
 
 
-            clientes.obterTodos().forEach(System.out::println);
+            clientes.findByNomeLike("est").forEach(c -> {
+                clientes.delete(c);
+            });
+
+            clientes.findAll().forEach(System.out::println);
 
 
 
